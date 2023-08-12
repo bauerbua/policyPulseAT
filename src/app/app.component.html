@@ -1,16 +1,4 @@
-<!-- data.component.html -->
-<table>
-	<thead>
-		<tr>
-			<!-- Define table headers -->
-			<!-- Example: <th>Title</th> -->
-		</tr>
-	</thead>
-	<tbody>
-		<ng-container *ngIf="data$ | async as data">
-			<tr *ngFor="let item of data">
-				<td>{{ item[itemKeys.Themen] }}</td>
-			</tr>
-		</ng-container>
-	</tbody>
-</table>
+<h1>PolicyPulse</h1>
+<ng-container *ngIf="data$ | async as data">
+	<app-pie-chart [data]="data"></app-pie-chart>
+</ng-container>

@@ -4,11 +4,19 @@ import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.inter
 import { Fraktion, Gremium, Thema } from './api/api-filter-dimensions';
 import { Observable, map, of } from 'rxjs';
 import { mockRows } from './api/mock/mock.data';
+import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        PieChartComponent,
+        AsyncPipe,
+    ],
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);

@@ -1,4 +1,4 @@
 <h1>PolicyPulse</h1>
-<ng-container *ngIf="data$ | async as data">
-	<app-pie-chart [data]="data"></app-pie-chart>
+<ng-container *ngIf="barChartData$ | async as barChartData">
+	<app-bar-chart [data]="barChartData"></app-bar-chart>
 </ng-container>

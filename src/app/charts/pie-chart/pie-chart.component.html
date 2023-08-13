@@ -1,13 +1,1 @@
 <h2>Pie Chart</h2>
-<div class="container">
-	<svg id="chart">
-		<rect
-			*ngFor="let d of DUMMY_DATA; index as i"
-			[attr.x]="xScale(d.fraktion)"
-			[attr.y]="yScale(d.count)"
-			[attr.width]="xScale.bandwidth()"
-			[attr.height]="yScale(0) - yScale(d.count)"
-			[attr.fill]="colorScale(i.toString())"
-		></rect>
-	</svg>
-</div>

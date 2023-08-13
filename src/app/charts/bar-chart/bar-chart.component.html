@@ -1,0 +1,13 @@
+<h2>Bar Chart</h2>
+<div class="container">
+	<svg id="chart">
+		<rect
+			*ngFor="let d of data; index as i"
+			[attr.x]="xScale(d.category)"
+			[attr.y]="yScale(d.value)"
+			[attr.width]="xScale.bandwidth()"
+			[attr.height]="yScale(0) - yScale(d.value)"
+			[attr.fill]="colorScale(i.toString())"
+		></rect>
+	</svg>
+</div>

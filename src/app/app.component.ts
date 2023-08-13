@@ -2,26 +2,26 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ApiFacade } from './api/api.facade.service';
 import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.interface';
 import { Fraktion, Gremium, Thema } from './api/api-filter-dimensions';
-import { Observable, map, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { mockRows } from './api/mock/mock.data';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { BarChartDataPoint } from './charts/chart-data-interfaces/bar-chart-data.interface';
+import { BarChartService } from './charts/bar-chart/bar-chartr.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        PieChartComponent,
-        AsyncPipe,
-    ],
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	standalone: true,
+	imports: [NgIf, PieChartComponent, AsyncPipe, BarChartComponent],
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);
+	private barChartService = inject(BarChartService);
 	public itemKeys = ItemKeys;
-	public data$: Observable<ApiResponse['rows']> | undefined;
+	public barChartData$: Observable<BarChartDataPoint[]> | undefined;
 
 	ngOnInit() {
 		const filters: FilterRequestBody = {
@@ -32,12 +32,37 @@ export class AppComponent implements OnInit {
 			THEMEN: [Thema.Arbeit],
 			FRAK_CODE: [Fraktion.FPÖ, Fraktion.GRÜNE],
 		};
-		/* 		this.data$ = this.apiFacade.fetchData(filters).pipe(
+		/* 		this.barChartData$ = this.apiFacade.fetchData(filters).pipe(
 			map(res => {
 				return res.rows;
 			})
 		); */
 
-		this.data$ = of(mockRows);
+		this.barChartData$ = of(this.barChartService.transformData(mockRows, this.transformBarChartData));
+	}
+
+	// this function would define what should be picked and how it schould be calculated --> differs from chart to chart
+	private transformBarChartData(apiData: ApiResponse['rows']): BarChartDataPoint[] {
+		const categoryCounts: { [category: string]: number } = {};
+
+		for (const item of apiData) {
+			const category = item[ItemKeys.KlubFraktionscode];
+			if (category) {
+				if (categoryCounts.hasOwnProperty(category)) {
+					categoryCounts[category]++;
+				} else {
+					categoryCounts[category] = 1;
+				}
+			}
+		}
+
+		const result: BarChartDataPoint[] = [];
+		for (const category in categoryCounts) {
+			if (categoryCounts.hasOwnProperty(category)) {
+				result.push({ category, value: categoryCounts[category] });
+			}
+		}
+
+		return result;
 	}
 }

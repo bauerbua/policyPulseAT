@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import * as d3 from 'd3';
 import { BarChartDataPoint } from '../chart-data-interfaces/bar-chart-data.interface';
+import { BarChart } from './bar-chart';
+import { BaseType, Selection, scaleOrdinal, schemeAccent, select } from 'd3';
 
 @Component({
 	selector: 'app-bar-chart',
@@ -13,22 +14,37 @@ import { BarChartDataPoint } from '../chart-data-interfaces/bar-chart-data.inter
 export class BarChartComponent implements OnInit, OnChanges {
 	@Input({ required: true }) data: BarChartDataPoint[] | undefined;
 
-	xScale = d3.scaleBand().range([30, 190]);
-	yScale = d3.scaleLinear().range([180, 20]);
-	colorScale = d3.scaleOrdinal(d3.schemeAccent);
+	private barChart = inject(BarChart);
+	private hostElement = inject(ElementRef);
+
+	private margin = {
+		top: 20,
+		right: 20,
+		bottom: 20,
+		left: 20,
+	};
+	private height: number = 400;
+	private width: number = 600;
+	// private height: number = this.hostElement.nativeElement.offsetHeight;
+	// private width: number = this.hostElement.nativeElement.offsetWidth;
+
+	colorScale = scaleOrdinal(schemeAccent);
+	private svg: Selection<BaseType, unknown, HTMLElement, any> | undefined;
 
 	ngOnInit(): void {
-		console.log(this.data);
-		/* this.createSvg();
-		this.drawBars(this.DUMMY_DATA); */
+		this.svg = select('#barChart').attr('width', this.width).attr('height', this.height);
+		const plot = this.barChart
+			.createChart()
+			.width(this.width)
+			.height(this.height)
+			.data(this.data)
+			.xValue((d: BarChartDataPoint) => d.category)
+			.yValue((d: BarChartDataPoint) => d.value)
+			.margin(this.margin);
+		this.svg.call(plot);
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (!!this.data && this.data.length > 0) {
-			this.xScale.domain(this.data.map(d => d.category));
-			this.yScale.domain([0, d3.max(this.data, d => d.value) as number]);
-		}
-	}
+	ngOnChanges(changes: SimpleChanges): void {}
 
 	/* private createSvg(): void {
 		this.svg = d3

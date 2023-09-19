@@ -4,7 +4,6 @@ import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.inter
 import { Fraktion, Gremium, Thema } from './api/api-filter-dimensions';
 import { Observable, of } from 'rxjs';
 import { mockRows } from './api/mock/mock.data';
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { BarChartDataPoint } from './charts/chart-data-interfaces/bar-chart-data.interface';
@@ -15,7 +14,7 @@ import { BarChartService } from './charts/bar-chart/bar-chartr.service';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 	standalone: true,
-	imports: [NgIf, PieChartComponent, AsyncPipe, BarChartComponent],
+	imports: [NgIf, AsyncPipe, BarChartComponent],
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);

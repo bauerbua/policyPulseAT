@@ -3,7 +3,7 @@ import { AntragsArtBundesrat, AntragsArtNationalrat, Fraktion, Gremium, Thema } 
 export interface FilterRequestBody {
 	THEMEN?: Thema[];
 	NPBR?: Gremium[];
-	GP_CODE?: string[]; // Gesetzgebungsperiode
+	GP_CODE?: string[]; // Gesetzgebungsperiode in Römischen Zahlen
 	DATUM_VON?: string[]; // Format: dd.mm.yyyy
 	VHG: string[] /* ['ANTR'] */;
 	DOKTYP?: AntragsArtNationalrat[] | AntragsArtBundesrat[];

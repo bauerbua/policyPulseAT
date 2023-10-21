@@ -1,13 +1,14 @@
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { ApiFacade } from './api/api.facade.service';
-import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.interface';
-import { Fraktion, Gremium, Thema } from './api/api-filter-dimensions';
 import { Observable, of } from 'rxjs';
+import { Gremium, Thema } from './api/api-filter-dimensions';
+import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.interface';
+import { ApiFacade } from './api/api.facade.service';
 import { mockRows } from './api/mock/mock.data';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { fpö_grüne_arbeit } from './api/mock/fpö_grüne_arbeit';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { BarChartService } from './charts/bar-chart/bar-chart.service';
 import { BarChartDataPoint } from './charts/chart-data-interfaces/bar-chart-data.interface';
-import { BarChartService } from './charts/bar-chart/bar-chartr.service';
 
 @Component({
 	selector: 'app-root',
@@ -26,14 +27,14 @@ export class AppComponent implements OnInit {
 		const filters: FilterRequestBody = {
 			NPBR: [Gremium.Nationalrat],
 			VHG: ['ANTR'],
-			DATUM_VON: ['01.01.2023'],
+			DATUM_VON: ['2023-01-01T00:00:00.000Z', null],
 			GP_CODE: ['XXVII'],
-			THEMEN: [Thema.Arbeit],
-			FRAK_CODE: [Fraktion.FPÖ, Fraktion.GRÜNE],
+			THEMEN: [Thema.KlimaUmweltUndEnergie],
+			// FRAK_CODE: [Fraktion.FPÖ, Fraktion.GRÜNE],
 		};
 		/* 		this.barChartData$ = this.apiFacade.fetchData(filters).pipe(
 			map(res => {
-				return res.rows;
+				return this.barChartService.transformData(res.rows, this.transformBarChartData);
 			})
 		); */
 

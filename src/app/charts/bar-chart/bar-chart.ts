@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { axisBottom, axisLeft, extent, scaleBand, scaleLinear } from 'd3';
+import { NumberValue, axisBottom, axisLeft, max, nice, scaleBand, scaleLinear, select } from 'd3';
+import { Fraktion } from 'src/app/api/api-filter-dimensions';
 import { BarChartDataPoint } from '../chart-data-interfaces/bar-chart-data.interface';
 
 export interface IBarChartConfig {
@@ -26,23 +27,61 @@ export class BarChart {
 		let xValue: IBarChartConfig['xValue'];
 		let yValue: IBarChartConfig['yValue'];
 		let margin: IBarChartConfig['margin'];
+		let xAxisTitle: string;
+		let yAxisTitle: string;
 
 		const chart = (selection: any) => {
 			const x = scaleBand()
 				.domain(data.map(d => d.category))
-				.range([margin.left, width - margin.right]);
+				.range([margin.left, width - margin.right])
+				.padding(0.2);
 
-			const y = scaleLinear().domain(<[any, any]>extent(data, yValue));
+			const y = scaleLinear()
+				.domain(nice(0, max(data.map(d => d.value as any)), 2))
+				.range([height - margin.bottom, margin.top]);
+
+			const tooltip = select('body')
+				.append('div')
+				.style('opacity', 0)
+				.attr('class', 'text-xs inline-block bg-white border rounded p-2 border-black absolute pointer-events-none');
+
+			selection
+				.selectAll('line')
+				.data(y.ticks())
+				.join('line')
+				.join('line')
+				.attr('x1', margin.left)
+				.attr('x2', width - margin.right)
+				.attr('y1', (d: NumberValue) => y(d))
+				.attr('y2', (d: NumberValue) => y(d))
+				.attr('class', 'stroke-slate-200');
+
 			const bars = selection
 				.selectAll('bar')
 				.data(data)
 				.join('rect')
 				.attr('x', (d: BarChartDataPoint) => x(d.category))
-				.attr('y', (d: BarChartDataPoint) => d.value)
+				.attr('y', (d: BarChartDataPoint) => y(d.value))
 				.attr('width', x.bandwidth())
-				.attr('height', (d: BarChartDataPoint) => height - y(d.value))
-				.attr('fill', '#69b3a2');
-			console.log(bars);
+				.attr('height', (d: BarChartDataPoint) => height - margin.bottom - y(d.value))
+				.attr('fill', 'gray')
+				/* .attr('fill', (d: BarChartDataPoint) =>
+					d.category.includes(Fraktion.GRÜNE) ? '#73A31C' : d.category.includes(Fraktion.FPÖ) ? '#0156A2' : 'gray'
+				) */
+				.on('mouseover', (event: MouseEvent) => {
+					select(event.target as any).style('opacity', 0.7);
+					tooltip.style('opacity', 1);
+				})
+				.on('mousemove', (event: MouseEvent, d: BarChartDataPoint) => {
+					tooltip
+						.style('top', event.y + 'px')
+						.style('left', event.x + 'px')
+						.html(`${d.category}: ${d.value}`);
+				})
+				.on('mouseleave', (event: MouseEvent) => {
+					tooltip.style('opacity', 0);
+					select(event.target as any).style('opacity', 1);
+				});
 
 			selection
 				.selectAll('.y-axis')
@@ -59,6 +98,21 @@ export class BarChart {
 				.attr('class', 'x-axis')
 				.attr('transform', `translate(0,${height - margin.bottom})`)
 				.call(axisBottom(x));
+
+			selection
+				.append('text')
+				.attr('text-anchor', 'end')
+				.attr('transform', 'rotate(-90)')
+				.attr('y', margin.left - 30)
+				.attr('x', -margin.top)
+				.text(yAxisTitle);
+
+			selection
+				.append('text')
+				.attr('text-anchor', 'end')
+				.attr('y', height - margin.bottom + 40)
+				.attr('x', width - margin.right)
+				.text(xAxisTitle);
 		};
 
 		chart.width = function (_: any) {
@@ -79,6 +133,14 @@ export class BarChart {
 
 		chart.yValue = function (_: any) {
 			return arguments.length ? ((yValue = _), chart) : yValue;
+		};
+
+		chart.xAxisTitle = function (_: any) {
+			return arguments.length ? ((xAxisTitle = _), chart) : xAxisTitle;
+		};
+
+		chart.yAxisTitle = function (_: any) {
+			return arguments.length ? ((yAxisTitle = _), chart) : yAxisTitle;
 		};
 
 		chart.margin = function (_: { top: number; right: number; bottom: number; left: number }) {

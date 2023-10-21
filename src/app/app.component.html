@@ -1,4 +1,5 @@
-<h1>PolicyPulse</h1>
 <ng-container *ngIf="barChartData$ | async as barChartData">
-	<app-bar-chart [data]="barChartData"></app-bar-chart>
+	<div class="p-4">
+		<app-bar-chart [data]="barChartData"></app-bar-chart>
+	</div>
 </ng-container>

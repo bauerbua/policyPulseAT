@@ -4,7 +4,7 @@ export interface FilterRequestBody {
 	THEMEN?: Thema[];
 	NPBR?: Gremium[];
 	GP_CODE?: string[]; // Gesetzgebungsperiode in Römischen Zahlen
-	DATUM_VON?: string[]; // Format: dd.mm.yyyy
+	DATUM_VON?: (string | null)[]; // Format: dd.mm.yyyy
 	VHG: string[] /* ['ANTR'] */;
 	DOKTYP?: AntragsArtNationalrat[] | AntragsArtBundesrat[];
 	PAD_INTERN?: number[]; // PersonenID seit 1918 details unter
@@ -14,6 +14,9 @@ export interface FilterRequestBody {
 	FRAK_CODE?: Fraktion[];
 }
 
+/*
+	This is the indexation of the response 
+*/
 export enum ItemKeys {
 	Gesetzgebungsperiode,
 	Identifikationstyp,

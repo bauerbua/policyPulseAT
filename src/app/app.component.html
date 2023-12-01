@@ -1,5 +1,5 @@
-<ng-container *ngIf="barChartData$ | async as barChartData">
+<ng-container *ngIf="barChart$ | async as barChart">
 	<div class="p-4">
-		<app-bar-chart [data]="barChartData"></app-bar-chart>
+		<app-bar-chart [data]="barChart.data" [source]="barChart.source"></app-bar-chart>
 	</div>
 </ng-container>

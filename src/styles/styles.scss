@@ -1,0 +1,21 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import 'typography.scss';
+
+body {
+	@apply bg-creamWhite font-sans text-charcoalGray;
+}
+
+svg {
+	text {
+		@apply fill-slateGray text-xs;
+	}
+
+	.axis {
+		text {
+			@apply text-slateGray text-xs max-w-[100px] truncate;
+		}
+	}
+}

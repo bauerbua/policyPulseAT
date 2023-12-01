@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NumberValue, axisBottom, axisLeft, max, nice, scaleBand, scaleLinear, select } from 'd3';
-import { Fraktion } from 'src/app/api/api-filter-dimensions';
 import { BarChartDataPoint } from '../chart-data-interfaces/bar-chart-data.interface';
 
 export interface IBarChartConfig {
@@ -56,7 +55,7 @@ export class BarChart {
 				.attr('y2', (d: NumberValue) => y(d))
 				.attr('class', 'stroke-slate-200');
 
-			const bars = selection
+			selection
 				.selectAll('bar')
 				.data(data)
 				.join('rect')
@@ -64,7 +63,7 @@ export class BarChart {
 				.attr('y', (d: BarChartDataPoint) => y(d.value))
 				.attr('width', x.bandwidth())
 				.attr('height', (d: BarChartDataPoint) => height - margin.bottom - y(d.value))
-				.attr('fill', 'gray')
+				.attr('class', 'fill-tranquilBlue')
 				/* .attr('fill', (d: BarChartDataPoint) =>
 					d.category.includes(Fraktion.GRÜNE) ? '#73A31C' : d.category.includes(Fraktion.FPÖ) ? '#0156A2' : 'gray'
 				) */
@@ -83,11 +82,23 @@ export class BarChart {
 					select(event.target as any).style('opacity', 1);
 				});
 
+			// After drawing the bars
+
+			selection
+				.selectAll('.bar-labels')
+				.data(data)
+				.join('text')
+				.attr('x', (d: BarChartDataPoint) => x(d.category)! + x.bandwidth() / 2)
+				.attr('y', (d: BarChartDataPoint) => y(d.value) - 10)
+				.text((d: BarChartDataPoint) => d.value)
+				.attr('text-anchor', 'middle')
+				.attr('class', 'bar-label');
+
 			selection
 				.selectAll('.y-axis')
 				.data([null])
 				.join('g')
-				.attr('class', 'y-axis')
+				.attr('class', 'axis')
 				.attr('transform', `translate(${margin.left},0)`)
 				.call(axisLeft(y));
 
@@ -95,23 +106,28 @@ export class BarChart {
 				.selectAll('.x-axis')
 				.data([null])
 				.join('g')
-				.attr('class', 'x-axis')
+				.attr('class', 'axis')
 				.attr('transform', `translate(0,${height - margin.bottom})`)
-				.call(axisBottom(x));
+				.call(axisBottom(x))
+				.selectAll('text')
+				.style('text-anchor', 'end')
+				.attr('transform', 'rotate(-45 10 10)');
 
 			selection
 				.append('text')
 				.attr('text-anchor', 'end')
 				.attr('transform', 'rotate(-90)')
-				.attr('y', margin.left - 30)
-				.attr('x', -margin.top)
+				.attr('class', 'axisTitle')
+				.attr('y', margin.left / 3)
+				.attr('x', -(height - margin.bottom) / 2)
 				.text(yAxisTitle);
 
 			selection
 				.append('text')
 				.attr('text-anchor', 'end')
-				.attr('y', height - margin.bottom + 40)
-				.attr('x', width - margin.right)
+				.attr('class', 'axisTitle')
+				.attr('y', height - margin.bottom / 3)
+				.attr('x', (width + margin.left) / 2)
 				.text(xAxisTitle);
 		};
 

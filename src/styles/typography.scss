@@ -1,0 +1,11 @@
+h1 {
+	@apply text-3xl font-serif;
+}
+
+h2 {
+	@apply text-2xl font-serif;
+}
+
+a {
+	@apply text-skyBlue hover:underline transition-colors;
+}

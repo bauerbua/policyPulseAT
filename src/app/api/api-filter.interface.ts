@@ -1,11 +1,19 @@
-import { AntragsArtBundesrat, AntragsArtNationalrat, Fraktion, Gremium, Thema } from './api-filter-dimensions';
+import {
+	AntragsArtBundesrat,
+	AntragsArtNationalrat,
+	Fraktion,
+	Gegenstand,
+	Gesetzgebungsperiode,
+	Gremium,
+	Thema,
+} from './api-filter-dimensions';
 
 export interface FilterRequestBody {
 	THEMEN?: Thema[];
-	NPBR?: Gremium[];
-	GP_CODE?: string[]; // Gesetzgebungsperiode in Römischen Zahlen
+	NRBR?: Gremium[];
+	GP_CODE?: Gesetzgebungsperiode[]; // Gesetzgebungsperiode in Römischen Zahlen
 	DATUM_VON?: (string | null)[]; // Format: dd.mm.yyyy
-	VHG: string[] /* ['ANTR'] */;
+	VHG: Gegenstand[] /* ['ANTR'] */;
 	DOKTYP?: AntragsArtNationalrat[] | AntragsArtBundesrat[];
 	PAD_INTERN?: number[]; // PersonenID seit 1918 details unter
 	INRNUM?: number[];
@@ -51,8 +59,11 @@ export enum ItemKeys {
 }
 
 export interface ApiResponse {
-	count: number;
-	header: any[];
-	pages: number;
-	rows: (string | number | null)[][]; // Define strcutre of each returned item
+	data: {
+		count: number;
+		header: any[];
+		pages: number;
+		rows: (string | number | null)[][]; // Define strcutre of each returned item
+	};
+	source: string;
 }

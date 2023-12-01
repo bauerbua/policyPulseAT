@@ -1,6 +1,6 @@
 import { ApiResponse } from '../api-filter.interface';
 
-export const mockRows: ApiResponse['rows'] = [
+export const mockRows: ApiResponse['data']['rows'] = [
 	[
 		'XXVII',
 		'A',

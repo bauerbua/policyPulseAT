@@ -1,6 +1,6 @@
 import { ApiResponse } from '../api-filter.interface';
 
-export const fpö_grüne_arbeit: ApiResponse['rows'] = [
+export const fpö_grüne_arbeit: ApiResponse['data']['rows'] = [
 	[
 		'XXVII',
 		'A',

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { BaseType, Selection, select } from 'd3';
+import { SvgService } from 'src/app/services/download-svg.service';
 import { BarChartDataPoint } from '../chart-data-interfaces/bar-chart-data.interface';
 import { BarChart } from './bar-chart';
 
@@ -11,11 +12,12 @@ import { BarChart } from './bar-chart';
 	templateUrl: './bar-chart.component.html',
 	styleUrls: ['./bar-chart.component.scss'],
 })
-export class BarChartComponent implements OnInit, OnChanges {
+export class BarChartComponent implements OnInit {
 	@Input({ required: true }) data: BarChartDataPoint[] | undefined;
 	@Input({ required: true }) source: string | undefined;
 
 	private barChart = inject(BarChart);
+	private svgService = inject(SvgService);
 
 	private margin = {
 		top: 20,
@@ -41,5 +43,12 @@ export class BarChartComponent implements OnInit, OnChanges {
 		this.svg.call(plot);
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {}
+	public downloadSvg(svg: HTMLElement) {
+		let svgBody: any = svg.innerHTML;
+		let svgContent =
+			'﻿<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="4239.54 906.94 3137 1984">' +
+			svgBody +
+			'</svg>';
+		// this.svgService.download(svgContent, 'chart.svg');
+	}
 }

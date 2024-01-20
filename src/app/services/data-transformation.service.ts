@@ -5,9 +5,13 @@ import { ApiResponse, ItemKeys } from '../api/api-filter.interface';
 export class DataTransformationService {
 	public countByCategory(data: ApiResponse['data']['rows'], category: ItemKeys, showOnly?: string[]) {
 		let categoryCounts: { [key: string]: number } = {};
-
 		for (const item of data) {
-			const cat: string = JSON.parse(item[category] as string);
+			let cat: any;
+			try {
+				cat = JSON.parse(item[category] as string);
+			} catch (error) {
+				cat = item[category];
+			}
 			if (Array.isArray(cat)) {
 				for (const catItem of cat) {
 					if (categoryCounts[catItem]) {
@@ -15,6 +19,12 @@ export class DataTransformationService {
 					} else {
 						categoryCounts[catItem] = 1;
 					}
+				}
+			} else {
+				if (categoryCounts[cat]) {
+					categoryCounts[cat]++;
+				} else {
+					categoryCounts[cat] = 1;
 				}
 			}
 		}

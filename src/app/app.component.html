@@ -1,5 +1,11 @@
+<app-header></app-header>
 <ng-container *ngIf="barChart$ | async as barChart">
 	<div class="p-4">
 		<app-bar-chart [data]="barChart.data" [source]="barChart.source"></app-bar-chart>
+	</div>
+</ng-container>
+<ng-container *ngIf="lineChart$ | async as lineChart">
+	<div class="p-4">
+		<app-line-chart [data]="lineChart.data" [source]="lineChart.source"></app-line-chart>
 	</div>
 </ng-container>

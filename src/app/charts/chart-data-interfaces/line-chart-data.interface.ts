@@ -1,5 +1,5 @@
 export interface LineChartDataPoint {
-	x: number;
+	x: string;
 	y: number;
 }
 

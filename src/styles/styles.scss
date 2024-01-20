@@ -5,17 +5,17 @@
 @import 'typography.scss';
 
 body {
-	@apply bg-creamWhite font-sans text-charcoalGray;
+	@apply font-body bg-background-50 text-text-950;
 }
 
 svg {
 	text {
-		@apply fill-slateGray text-xs;
+		@apply fill-text-950 text-text-950;
 	}
 
 	.axis {
 		text {
-			@apply text-slateGray text-xs max-w-[100px] truncate;
+			@apply text-text-950 text-xs max-w-[100px] truncate;
 		}
 	}
 }

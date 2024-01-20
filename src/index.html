@@ -1,13 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>PolicyPulseAT</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+	<head>
+		<meta charset="utf-8" />
+		<title>PolicyPulseAT</title>
+		<base href="/" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+		<script type="module">
+			import tgwf from 'https://cdn.skypack.dev/@tgwf/co2';
+			const emissions = new tgwf.co2();
+			const bytesSent = 1000 * 1000 * 1000; // 1GB expressed in bytes
+			const greenHost = true; // Is the data transferred from a green host?
+
+			let estimatedCO2 = emissions.perByte(bytesSent, greenHost).toFixed(3);
+			console.log(`Estimated CO2 emissions: ${estimatedCO2}g`);
+		</script>
+	</head>
+	<body>
+		<app-root></app-root>
+	</body>
 </html>

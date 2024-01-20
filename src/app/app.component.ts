@@ -1,42 +1,53 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
-import { Fraktion, Gegenstand, Gesetzgebungsperiode, Gremium, Thema } from './api/api-filter-dimensions';
+import { Observable, map } from 'rxjs';
+import { Gegenstand, Gesetzgebungsperiode, Gremium, Thema } from './api/api-filter-dimensions';
 import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.interface';
 import { ApiFacade } from './api/api.facade.service';
-import { mockRows } from './api/mock/mock.data';
-import { fpö_grüne_arbeit } from './api/mock/fpö_grüne_arbeit';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { BarChartService } from './charts/bar-chart/bar-chart.service';
 import { BarChartDataPoint } from './charts/chart-data-interfaces/bar-chart-data.interface';
+import { HeaderComponent } from './core/header/header.component';
 import { DataTransformationService } from './services/data-transformation.service';
+import { LineChartService } from './charts/line-chart/line-chart.service';
+import { LineChartDataPoint } from './charts/chart-data-interfaces/line-chart-data.interface';
+import { LineChartComponent } from './charts/line-chart/line-chart.component';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 	standalone: true,
-	imports: [NgIf, AsyncPipe, BarChartComponent],
+	imports: [NgIf, AsyncPipe, BarChartComponent, HeaderComponent, LineChartComponent],
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);
 	private barChartService = inject(BarChartService);
+	private lineChartService = inject(LineChartService);
 	private dataTransformationService = inject(DataTransformationService);
 
 	public itemKeys = ItemKeys;
 	public barChart$: Observable<{ data: BarChartDataPoint[]; source: string }> | undefined;
+	public lineChart$: Observable<{ data: LineChartDataPoint[]; source: string }> | undefined;
 
 	ngOnInit() {
 		const filters: FilterRequestBody = {
 			NRBR: [Gremium.Nationalrat],
 			VHG: [Gegenstand.Regierungsvorlagen_Gesetze],
 			GP_CODE: [Gesetzgebungsperiode.XXVII_2019],
-			THEMEN: [Thema.KlimaUmweltUndEnergie, Thema.Bildung, Thema.FamilieUndGenerationen],
 		};
 		this.barChart$ = this.apiFacade.fetchData(filters).pipe(
 			map(res => {
 				return {
 					data: this.barChartService.transformData(res.data.rows, this.transformBarChartData.bind(this)),
+					source: res.source,
+				};
+			})
+		);
+		this.lineChart$ = this.apiFacade.fetchData(filters).pipe(
+			map(res => {
+				return {
+					data: this.lineChartService.transformData(res.data.rows, this.transformLineChartData.bind(this)),
 					source: res.source,
 				};
 			})
@@ -56,6 +67,17 @@ export class AppComponent implements OnInit {
 		for (const category in categoryCounts) {
 			if (categoryCounts.hasOwnProperty(category)) {
 				result.push({ category, value: categoryCounts[category] });
+			}
+		}
+		return result;
+	}
+
+	private transformLineChartData(apiData: ApiResponse['data']['rows']): LineChartDataPoint[] {
+		const categoryCounts = this.dataTransformationService.countByCategory(apiData, ItemKeys.DatumLetzteVerfahrensstufe);
+		const result: LineChartDataPoint[] = [];
+		for (const category in categoryCounts) {
+			if (categoryCounts.hasOwnProperty(category)) {
+				result.push({ x: category as any, y: categoryCounts[category] });
 			}
 		}
 		return result;

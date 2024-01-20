@@ -1,11 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Afacad:700|Afacad:400');
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	@apply font-heading font-bold;
+}
+
+caption {
+	@apply font-heading;
+}
+
+html {
+	font-size: 100%;
+} /* 16px */
+
 h1 {
-	@apply text-3xl font-serif;
+	font-size: 4.21rem; /* 67.36px */
 }
 
 h2 {
-	@apply text-2xl font-serif;
+	font-size: 3.158rem; /* 50.56px */
+}
+
+h3 {
+	font-size: 2.369rem; /* 37.92px */
+}
+
+h4 {
+	font-size: 1.777rem; /* 28.48px */
+}
+
+h5 {
+	font-size: 1.333rem; /* 21.28px */
+}
+
+small {
+	font-size: 0.75rem; /* 12px */
 }
 
 a {
-	@apply text-skyBlue hover:underline transition-colors;
+	@apply border-b-2 border-x-accent-400 transition px-2;
+
+	&:hover {
+		@apply bg-accent-400;
+	}
 }

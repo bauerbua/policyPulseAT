@@ -27,7 +27,6 @@ export class ApiFacade {
 	private getSource(requestParams: FilterRequestBody | undefined): string {
 		let sourceBaseUrl = 'https://www.parlament.gv.at/recherchieren/gegenstaende/index.html?';
 		if (requestParams) {
-			console.log(requestParams);
 			Object.entries(requestParams).forEach(([key, valuesArray]) => {
 				valuesArray.forEach((value: string) => {
 					value = value.replace(/ /g, '+');

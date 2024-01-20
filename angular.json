@@ -57,19 +57,19 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
-						"production": {
-							"browserTarget": "policyPulseAT:build:production"
+            "production": {
+              "buildTarget": "policyPulseAT:build:production"
 						},
-						"development": {
-							"browserTarget": "policyPulseAT:build:development"
+            "development": {
+              "buildTarget": "policyPulseAT:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "policyPulseAT:build"
+          "options": {
+            "buildTarget": "policyPulseAT:build"
 					}
 				},
 				"test": {

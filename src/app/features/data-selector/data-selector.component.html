@@ -1,0 +1,44 @@
+<form [formGroup]="dataSelectorForm" (ngSubmit)="searchData()">
+	<label>
+		Themen
+		<ul formArrayName="themen">
+			<li *ngFor="let thema of getControls('themen').controls; let i = index">
+				<label> <input type="checkbox" [formControlName]="i" /> {{ themen[i] }} </label>
+			</li>
+		</ul>
+	</label>
+	<label>
+		Gremium
+		<select name="gremium" id="gremium-select" formControlName="gremium">
+			<option value="" disabled>-- Bitte wählen --</option>
+			<option *ngFor="let gremium of gremien" [value]="gremium">{{ gremium }}</option>
+		</select>
+	</label>
+	<label>
+		Gesetzgebungsperiode
+		<ul formArrayName="periode">
+			<li *ngFor="let thema of getControls('periode').controls; let i = index">
+				<label> <input type="checkbox" [formControlName]="i" /> {{ periode[i] }} </label>
+			</li>
+		</ul>
+	</label>
+
+	<label>
+		Gegenstand
+		<ul formArrayName="gegenstand">
+			<li *ngFor="let thema of getControls('gegenstand').controls; let i = index">
+				<label> <input type="checkbox" [formControlName]="i" /> {{ gegenstand[i] }} </label>
+			</li>
+		</ul>
+	</label>
+
+	<label>
+		Klub / Fraktion
+		<ul formArrayName="fraktion">
+			<li *ngFor="let thema of getControls('fraktion').controls; let i = index">
+				<label> <input type="checkbox" [formControlName]="i" /> {{ fraktion[i] }} </label>
+			</li>
+		</ul>
+	</label>
+	<button class="primary" type="submit">Daten anzeigen</button>
+</form>

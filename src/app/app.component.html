@@ -1,5 +1,9 @@
 <app-header></app-header>
-<ng-container *ngIf="barChart$ | async as barChart">
+<main class="p-2">
+	<app-data-selector></app-data-selector>
+	<app-chart-outlet></app-chart-outlet>
+</main>
+<!-- <ng-container *ngIf="barChart$ | async as barChart">
 	<div class="p-4">
 		<app-bar-chart [data]="barChart.data" [source]="barChart.source"></app-bar-chart>
 	</div>
@@ -9,3 +13,4 @@
 		<app-line-chart [data]="lineChart.data" [source]="lineChart.source"></app-line-chart>
 	</div>
 </ng-container>
+ -->

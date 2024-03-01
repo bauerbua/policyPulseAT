@@ -12,13 +12,15 @@ import { DataTransformationService } from './services/data-transformation.servic
 import { LineChartService } from './charts/line-chart/line-chart.service';
 import { LineChartDataPoint } from './charts/chart-data-interfaces/line-chart-data.interface';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { DataSelectorComponent } from './features/data-selector/data-selector.component';
+import { ChartOutletComponent } from "./features/chart-outlet/chart-outlet.component";
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
-	standalone: true,
-	imports: [NgIf, AsyncPipe, BarChartComponent, HeaderComponent, LineChartComponent],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [NgIf, AsyncPipe, BarChartComponent, HeaderComponent, LineChartComponent, DataSelectorComponent, ChartOutletComponent]
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);
@@ -36,22 +38,28 @@ export class AppComponent implements OnInit {
 			VHG: [Gegenstand.Regierungsvorlagen_Gesetze],
 			GP_CODE: [Gesetzgebungsperiode.XXVII_2019],
 		};
-		this.barChart$ = this.apiFacade.fetchData(filters).pipe(
-			map(res => {
-				return {
-					data: this.barChartService.transformData(res.data.rows, this.transformBarChartData.bind(this)),
-					source: res.source,
-				};
-			})
-		);
-		this.lineChart$ = this.apiFacade.fetchData(filters).pipe(
-			map(res => {
-				return {
-					data: this.lineChartService.transformData(res.data.rows, this.transformLineChartData.bind(this)),
-					source: res.source,
-				};
-			})
-		);
+		/*     this.barChart$ = this.apiFacade.fetchData(filters).pipe(
+      map((res) => {
+        return {
+          data: this.barChartService.transformData(
+            res.data.rows,
+            this.transformBarChartData.bind(this),
+          ),
+          source: res.source,
+        };
+      }),
+    );
+    this.lineChart$ = this.apiFacade.fetchData(filters).pipe(
+      map((res) => {
+        return {
+          data: this.lineChartService.transformData(
+            res.data.rows,
+            this.transformLineChartData.bind(this),
+          ),
+          source: res.source,
+        };
+      }),
+    ); */
 
 		// this.barChartData$ = of(this.barChartService.transformData(mockRows, this.transformBarChartData.bind(this)));
 	}

@@ -13,7 +13,7 @@ export interface FilterRequestBody {
 	NRBR?: Gremium[];
 	GP_CODE?: Gesetzgebungsperiode[]; // Gesetzgebungsperiode in Römischen Zahlen
 	DATUM_VON?: (string | null)[]; // Format: dd.mm.yyyy
-	VHG: Gegenstand[] /* ['ANTR'] */;
+	VHG?: Gegenstand[];
 	DOKTYP?: AntragsArtNationalrat[] | AntragsArtBundesrat[];
 	PAD_INTERN?: number[]; // PersonenID seit 1918 details unter
 	INRNUM?: number[];

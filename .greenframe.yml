@@ -1,0 +1,11 @@
+baseURL: YOUR_APP_BASE_URL
+scenarios:
+  - path: PATH_TO_YOUR_SCENARIO_FILE
+    name: My first scenario
+    threshold: 0.1
+projectName: PolicyPulsAT
+samples: 3
+distant: false
+useAdblock: true
+containers:
+  - 'policy-pulse'

@@ -1,28 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Gesetzgebungsperiode, Gremium, Thema } from 'src/app/api/api-filter-dimensions';
-import { Gegenstand, Fraktion } from '../../api/api-filter-dimensions';
-import { FilterRequestBody } from '../../api/api-filter.interface';
-import { ApiFacade } from 'src/app/api/api.facade.service';
-import { ApiDataStore } from '../../core/api-data.store';
 import { take } from 'rxjs';
+import { Gesetzgebungsperiode, Gremium, Regierungen, Thema } from 'src/app/api/api-filter-dimensions';
+import { ApiFacade } from 'src/app/api/api.facade.service';
+import { Fraktion, Gegenstand, regierungsPerioden } from '../../api/api-filter-dimensions';
+import { FilterRequestBody } from '../../api/api-filter.interface';
+import { FilterGroups, TranslateEnumPipe } from './translateEnum.pipe';
 
 @Component({
 	selector: 'app-data-selector',
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule],
+	imports: [CommonModule, ReactiveFormsModule, TranslateEnumPipe],
 	templateUrl: './data-selector.component.html',
 	styleUrl: './data-selector.component.scss',
 })
 export class DataSelectorComponent implements OnInit {
 	private fb = inject(FormBuilder);
 	private apiFacade = inject(ApiFacade);
-	private apiDataStore = inject(ApiDataStore);
+
+	public filterGroups = FilterGroups;
 
 	public themen = Object.values(Thema);
 	public gremien = Object.values(Gremium);
 	public periode = Object.values(Gesetzgebungsperiode);
+	public regierungen = Object.values(Regierungen);
 	// todo: Gegenstand unterscheidet sich je nach Gremium
 	public gegenstand = Object.values(Gegenstand);
 	public fraktion = Object.values(Fraktion);
@@ -31,6 +33,7 @@ export class DataSelectorComponent implements OnInit {
 		gremium: [Gremium.Nationalrat],
 		themen: this.fb.array<boolean>([]),
 		periode: this.fb.array<boolean>([]),
+		regierungen: this.fb.array<boolean>([]),
 		gegenstand: this.fb.array<boolean>([]),
 		// gegenstand_art: this.fb.array<boolean>([]),
 		fraktion: this.fb.array<boolean>([]),
@@ -39,6 +42,7 @@ export class DataSelectorComponent implements OnInit {
 	ngOnInit(): void {
 		this.addCheckboxes(this.themen, this.getControls('themen'));
 		this.addCheckboxes(this.periode, this.getControls('periode'));
+		this.addCheckboxes(this.regierungen, this.getControls('regierungen'));
 		this.addCheckboxes(this.gegenstand, this.getControls('gegenstand'));
 		this.addCheckboxes(this.fraktion, this.getControls('fraktion'));
 	}
@@ -53,10 +57,15 @@ export class DataSelectorComponent implements OnInit {
 
 	public searchData() {
 		const gremium = this.dataSelectorForm.value.gremium || Gremium.Nationalrat;
-		const gegenstand = this.dataSelectorForm.value.gegenstand?.filter(v => v).map((v, i) => this.gegenstand[i]);
-		const periode = this.dataSelectorForm.value.periode?.filter(v => v).map((v, i) => this.periode[i]);
-		const fraktion = this.dataSelectorForm.value.fraktion?.filter(v => v).map((v, i) => this.fraktion[i]);
-		const themen = this.dataSelectorForm.value.themen?.filter(v => v).map((v, i) => this.themen[i]);
+		const gegenstand = this.dataSelectorForm.value.gegenstand?.flatMap((v, i) => (v ? this.gegenstand[i] : []));
+		const periode = this.dataSelectorForm.value.periode?.flatMap((v, i) => (v ? this.periode[i] : []));
+		const fraktion = this.dataSelectorForm.value.fraktion?.flatMap((v, i) => (v ? this.fraktion[i] : []));
+		const themen = this.dataSelectorForm.value.themen?.flatMap((v, i) => (v ? this.themen[i] : []));
+
+		const regierungsZeiten = this.dataSelectorForm.value.regierungen?.flatMap((v, i) =>
+			v ? regierungsPerioden[i] : []
+		);
+		console.log(regierungsZeiten);
 
 		const filterRequestBody: FilterRequestBody = {
 			NRBR: [gremium],
@@ -64,7 +73,12 @@ export class DataSelectorComponent implements OnInit {
 			GP_CODE: periode && periode.length > 0 ? periode : undefined,
 			FRAK_CODE: fraktion && fraktion.length > 0 ? fraktion : undefined,
 			THEMEN: themen && themen.length > 0 ? themen : undefined,
+			DATUM_VON: regierungsZeiten && regierungsZeiten.length === 1 ? [`${regierungsZeiten[0].start}`] : undefined,
 		};
+
+		if (regierungsZeiten && regierungsZeiten.length > 0) {
+			// Todo: send requests equal to regierungszeiten and merge responses
+		}
 		this.apiFacade.fetchData(filterRequestBody).pipe(take(1)).subscribe();
 	}
 }

@@ -14,13 +14,14 @@ import { LineChartDataPoint } from './charts/chart-data-interfaces/line-chart-da
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { DataSelectorComponent } from './features/data-selector/data-selector.component';
 import { ChartOutletComponent } from "./features/chart-outlet/chart-outlet.component";
+import { ChartPickerComponent } from "./features/chart-picker/chart-picker.component";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     standalone: true,
-    imports: [NgIf, AsyncPipe, BarChartComponent, HeaderComponent, LineChartComponent, DataSelectorComponent, ChartOutletComponent]
+    imports: [NgIf, AsyncPipe, BarChartComponent, HeaderComponent, LineChartComponent, DataSelectorComponent, ChartOutletComponent, ChartPickerComponent]
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);

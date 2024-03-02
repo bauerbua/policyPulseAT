@@ -11,14 +11,27 @@
 		Gremium
 		<select name="gremium" id="gremium-select" formControlName="gremium">
 			<option value="" disabled>-- Bitte wählen --</option>
-			<option *ngFor="let gremium of gremien" [value]="gremium">{{ gremium }}</option>
+			<option *ngFor="let gremium of gremien" [value]="gremium">
+				{{ gremium | translateEnum : filterGroups.gremium }}
+			</option>
 		</select>
 	</label>
 	<label>
 		Gesetzgebungsperiode
 		<ul formArrayName="periode">
 			<li *ngFor="let thema of getControls('periode').controls; let i = index">
-				<label> <input type="checkbox" [formControlName]="i" /> {{ periode[i] }} </label>
+				<label>
+					<input type="checkbox" [formControlName]="i" /> {{ periode[i] | translateEnum : filterGroups.periode }}
+				</label>
+			</li>
+		</ul>
+	</label>
+
+	<label>
+		Regierungen
+		<ul formArrayName="regierungen">
+			<li *ngFor="let thema of getControls('regierungen').controls; let i = index">
+				<label> <input type="checkbox" [formControlName]="i" /> {{ regierungen[i] }} </label>
 			</li>
 		</ul>
 	</label>
@@ -27,7 +40,9 @@
 		Gegenstand
 		<ul formArrayName="gegenstand">
 			<li *ngFor="let thema of getControls('gegenstand').controls; let i = index">
-				<label> <input type="checkbox" [formControlName]="i" /> {{ gegenstand[i] }} </label>
+				<label>
+					<input type="checkbox" [formControlName]="i" /> {{ gegenstand[i] | translateEnum : filterGroups.gegenstand }}
+				</label>
 			</li>
 		</ul>
 	</label>
@@ -36,7 +51,9 @@
 		Klub / Fraktion
 		<ul formArrayName="fraktion">
 			<li *ngFor="let thema of getControls('fraktion').controls; let i = index">
-				<label> <input type="checkbox" [formControlName]="i" /> {{ fraktion[i] }} </label>
+				<label>
+					<input type="checkbox" [formControlName]="i" /> {{ fraktion[i] | translateEnum : filterGroups.fraktion }}
+				</label>
 			</li>
 		</ul>
 	</label>

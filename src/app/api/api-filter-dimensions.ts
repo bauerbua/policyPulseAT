@@ -98,7 +98,7 @@ export enum Gesetzgebungsperiode {
 	XXI_1999_2002 = 'XXI',
 	XX_1996_1999 = 'XX',
 	XIX_1994_1996 = 'XIX',
-	XCIII_1990_1994 = 'XCIII',
+	XCIII_1990_1994 = 'XVIII',
 	XVII_1986_1990 = 'XVII',
 	XVI_1983_1986 = 'XVI',
 	XV_1979_1983 = 'XV',
@@ -119,3 +119,179 @@ export enum Gesetzgebungsperiode {
 	Konstituierende_Nationalratsversammlung = 'KN',
 	Provisorische_Nationalratsversammlung = 'PN',
 }
+
+export enum Regierungen {
+	Nehammer = 'Nehammer seit 6.12.2021',
+	Schallenberg = 'Schallenberg 11.10.2021 - 6.12.2021',
+	Kurz_II = 'Kurz II 7.1.2020 - 11.10.2021',
+	Bierlein = 'Bierlein 3.6.2019 - 7.1.2020',
+	Kurz_I = 'Kurz I 18.12.2017 - 28.5.2029',
+	Kern = 'Kern 17.5.2016 - 18.12.2017',
+	Faymann_II = 'Faymann II 16.12.2013 - 17.5.2016',
+	Faymann_I = 'Faymann I 2.12.2008 - 16.12.2013',
+	Gusenbauer = 'Gusenbauer 11.1.2007 - 2.12.2008',
+	Schüssel_II = 'Schüssel II 28.2.2003 - 11.1.2007',
+	Schüssel_I = 'Schüssel I 4.2.2000 - 28.2.2003',
+	Klima = 'Klima 28.1.1997 - 4.2.2000',
+	Vranitzky_V = 'Vranitzky V 12.3.1996 - 28.1.1997',
+	Vranitzky_IV = 'Vranitzky IV 29.10.1994 - 12.3.1996',
+	Vranitzky_III = 'Vranitzky III 17.12.1990 - 29.11.1994',
+	Vranitzky_II = 'Vranitzky II 21.1.1987 - 17.12.1990',
+	Vranitzky_I = 'Vranitzky I 16.6.1986 - 21.1.1987',
+	Sinowatz = 'Sinowatz 24.5.1983 - 16.6.1986',
+	Kreisky_IV = 'Kreisky IV 5.6.1979 - 24.5.1983',
+	Kreisky_III = 'Kreisky III 28.10.1975 - 5.6.1979',
+	Kreisky_II = 'Kreisky II 4.11.1971 - 28.10.1975',
+	Kreisky_I = 'Kreisky I 21.4.1970 - 4.11.1971',
+	Klaus_II = 'Klaus II 19.4.1966 - 21.4.1970',
+	Klaus_I = 'Klaus I 2.4.1964 - 19.4.1966',
+	Gorbach_II = 'Gorbach II 27.3.1963 - 2.4.1964',
+	Gorbach_I = 'Gorbach I 11.4.1961 - 27.3.1963',
+	Raab_IV = 'Rabb IV 3.11.1960 - 11.4.1961',
+	Raab_III = 'Rabb III 16.7.1959 - 3.11.1960',
+	Raab_II = 'Rabb II 29.6.1956 - 16.7.1959',
+	Raab_I = 'Rabb I 2.4.1953 - 29.6.1956',
+	Figl_III = 'Figl III 28.10.1952 - 2.4.1953',
+	Figl_II = 'Figl II 8.11.1949 - 28.10.1952',
+	Figl_I = 'Figl I 20.12.1945 - 8.11.1949',
+	Renner = 'Renner 27.4.1945 - 20.12.1945',
+}
+
+export const regierungsPerioden: { start: string; end: string | undefined }[] = [
+	{
+		start: '6.12.2021',
+		end: undefined,
+	},
+	{
+		start: '11.10.2021',
+		end: '6.12.2021',
+	},
+	{
+		start: '7.1.2020',
+		end: '11.10.2021',
+	},
+	{
+		start: '3.6.2019',
+		end: '7.1.2020',
+	},
+	{
+		start: '18.12.2017',
+		end: '28.5.2029',
+	},
+	{
+		start: '17.5.2016',
+		end: '18.12.2017',
+	},
+	{
+		start: '16.12.2013',
+		end: '17.5.2016',
+	},
+	{
+		start: '2.12.2008',
+		end: '16.12.2013',
+	},
+	{
+		start: '11.1.2007',
+		end: '2.12.2008',
+	},
+	{
+		start: '28.2.2003',
+		end: '11.1.2007',
+	},
+	{
+		start: '4.2.2000',
+		end: '28.2.2003',
+	},
+	{
+		start: '28.1.1997',
+		end: '4.2.2000',
+	},
+	{
+		start: '12.3.1996',
+		end: '28.1.1997',
+	},
+	{
+		start: '29.10.1994',
+		end: '12.3.1996',
+	},
+	{
+		start: '17.12.1990',
+		end: '29.11.1994',
+	},
+	{
+		start: '21.1.1987',
+		end: '17.12.1990',
+	},
+	{
+		start: '16.6.1986',
+		end: '21.1.1987',
+	},
+	{
+		start: '24.5.1983',
+		end: '16.6.1986',
+	},
+	{
+		start: '5.6.1979',
+		end: '24.5.1983',
+	},
+	{
+		start: '28.10.1975',
+		end: '5.6.1979',
+	},
+	{
+		start: '4.11.1971',
+		end: '28.10.1975',
+	},
+	{
+		start: '21.4.1970',
+		end: '4.11.1971',
+	},
+	{
+		start: '19.4.1966',
+		end: '21.4.1970',
+	},
+	{
+		start: '2.4.1964',
+		end: '19.4.1966',
+	},
+	{
+		start: '27.3.1963',
+		end: '2.4.1964',
+	},
+	{
+		start: '11.4.1961',
+		end: '27.3.1963',
+	},
+	{
+		start: '3.11.1960',
+		end: '11.4.1961',
+	},
+	{
+		start: '16.7.1959',
+		end: '3.11.1960',
+	},
+	{
+		start: '29.6.1956',
+		end: '16.7.1959',
+	},
+	{
+		start: '2.4.1953',
+		end: '29.6.1956',
+	},
+	{
+		start: '28.10.1952',
+		end: '2.4.1953',
+	},
+	{
+		start: '8.11.1949',
+		end: '28.10.1952',
+	},
+	{
+		start: '20.12.1945',
+		end: '8.11.1949',
+	},
+	{
+		start: '27.4.1945',
+		end: '20.12.1945',
+	},
+];

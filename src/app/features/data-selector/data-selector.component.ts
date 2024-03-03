@@ -46,8 +46,6 @@ export class DataSelectorComponent implements OnInit {
 		this.addCheckboxes(this.regierungen, this.getControls('regierungen'));
 		this.addCheckboxes(this.gegenstand, this.getControls('gegenstand'));
 		this.addCheckboxes(this.fraktion, this.getControls('fraktion'));
-
-		this.dataSelectorForm.valueChanges.subscribe(val => console.log(val));
 	}
 
 	private addCheckboxes(options: any[], formArray: FormArray) {
@@ -58,7 +56,7 @@ export class DataSelectorComponent implements OnInit {
 		return this.dataSelectorForm.get(name) as FormArray;
 	}
 
-	public searchData() {
+	public searchData(): void {
 		const gremium = this.dataSelectorForm.value.gremium || Gremium.Nationalrat;
 		const gegenstand = this.dataSelectorForm.value.gegenstand?.flatMap((v, i) => (v ? this.gegenstand[i] : []));
 		const periode = this.dataSelectorForm.value.periode?.flatMap((v, i) => (v ? this.periode[i] : []));
@@ -68,7 +66,6 @@ export class DataSelectorComponent implements OnInit {
 		const regierungsZeiten = this.dataSelectorForm.value.regierungen?.flatMap((v, i) =>
 			v ? regierungsPerioden[i] : []
 		);
-		console.log(regierungsZeiten);
 
 		const filterRequestBody: FilterRequestBody = {
 			NRBR: [gremium],

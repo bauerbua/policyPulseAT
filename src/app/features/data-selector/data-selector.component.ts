@@ -7,13 +7,14 @@ import { ApiFacade } from 'src/app/api/api.facade.service';
 import { Fraktion, Gegenstand, regierungsPerioden } from '../../api/api-filter-dimensions';
 import { FilterRequestBody } from '../../api/api-filter.interface';
 import { FilterGroups, TranslateEnumPipe } from './translateEnum.pipe';
+import { MultiSelectInputComponent } from '../../shared/multi-select-input/multi-select-input.component';
 
 @Component({
 	selector: 'app-data-selector',
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, TranslateEnumPipe],
 	templateUrl: './data-selector.component.html',
 	styleUrl: './data-selector.component.scss',
+	imports: [CommonModule, ReactiveFormsModule, TranslateEnumPipe, MultiSelectInputComponent],
 })
 export class DataSelectorComponent implements OnInit {
 	private fb = inject(FormBuilder);
@@ -45,6 +46,8 @@ export class DataSelectorComponent implements OnInit {
 		this.addCheckboxes(this.regierungen, this.getControls('regierungen'));
 		this.addCheckboxes(this.gegenstand, this.getControls('gegenstand'));
 		this.addCheckboxes(this.fraktion, this.getControls('fraktion'));
+
+		this.dataSelectorForm.valueChanges.subscribe(val => console.log(val));
 	}
 
 	private addCheckboxes(options: any[], formArray: FormArray) {

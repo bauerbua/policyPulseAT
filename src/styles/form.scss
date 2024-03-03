@@ -1,3 +1,7 @@
 button.primary {
-	@apply w-48 h-12 rounded-full text-white bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500;
+	@apply text-white bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500;
+}
+
+button {
+	@apply border-2 border-solid border-black rounded-md px-4 py-2 hover:bg-gray-200;
 }

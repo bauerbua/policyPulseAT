@@ -1,0 +1,19 @@
+<label> {{ label }} </label>
+<div>
+	<div class="relative">
+		<button type="button" (click)="openDropdown = !openDropdown">{{ label }}</button>
+	</div>
+	<ul [formArrayName]="formArrayName" class="absolute" [ngClass]="openDropdown ? 'block' : 'hidden'">
+		<li *ngFor="let control of controls; let i = index">
+			<label>
+				<input type="checkbox" [formControlName]="i" />
+				<ng-container *ngIf="translation; else noTranslation">
+					<span>{{ options[i] | translateEnum : translation }}</span>
+				</ng-container>
+				<ng-template #noTranslation>
+					<span>{{ options[i] }}</span>
+				</ng-template>
+			</label>
+		</li>
+	</ul>
+</div>

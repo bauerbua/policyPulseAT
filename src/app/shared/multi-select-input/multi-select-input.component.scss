@@ -1,0 +1,7 @@
+ul {
+	@apply shadow-md bg-white rounded-lg p-4;
+
+	label {
+		@apply flex flex-row items-center gap-1;
+	}
+}

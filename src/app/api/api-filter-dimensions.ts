@@ -125,7 +125,7 @@ export enum Regierungen {
 	Schallenberg = 'Schallenberg 11.10.2021 - 6.12.2021',
 	Kurz_II = 'Kurz II 7.1.2020 - 11.10.2021',
 	Bierlein = 'Bierlein 3.6.2019 - 7.1.2020',
-	Kurz_I = 'Kurz I 18.12.2017 - 28.5.2029',
+	Kurz_I = 'Kurz I 18.12.2017 - 28.5.2019',
 	Kern = 'Kern 17.5.2016 - 18.12.2017',
 	Faymann_II = 'Faymann II 16.12.2013 - 17.5.2016',
 	Faymann_I = 'Faymann I 2.12.2008 - 16.12.2013',

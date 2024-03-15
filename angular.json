@@ -56,20 +56,23 @@
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"proxyConfig": "proxy.config.json"
+					},
 					"configurations": {
-            "production": {
-              "buildTarget": "policyPulseAT:build:production"
+						"production": {
+							"buildTarget": "policyPulseAT:build:production"
 						},
-            "development": {
-              "buildTarget": "policyPulseAT:build:development"
+						"development": {
+							"buildTarget": "policyPulseAT:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "policyPulseAT:build"
+					"options": {
+						"buildTarget": "policyPulseAT:build"
 					}
 				},
 				"test": {

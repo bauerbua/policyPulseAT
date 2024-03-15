@@ -1,0 +1,8 @@
+[class^='cdk-column-'],
+[class*=' cdk-column-'] {
+	@apply p-2 border border-slate-300;
+}
+
+th {
+	@apply bg-slate-100;
+}

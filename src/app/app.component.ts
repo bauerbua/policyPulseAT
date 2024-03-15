@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Gegenstand, Gesetzgebungsperiode, Gremium, Thema } from './api/api-filter-dimensions';
 import { ApiResponse, FilterRequestBody, ItemKeys } from './api/api-filter.interface';
@@ -13,21 +13,35 @@ import { LineChartService } from './charts/line-chart/line-chart.service';
 import { LineChartDataPoint } from './charts/chart-data-interfaces/line-chart-data.interface';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { DataSelectorComponent } from './features/data-selector/data-selector.component';
-import { ChartOutletComponent } from "./features/chart-outlet/chart-outlet.component";
-import { ChartPickerComponent } from "./features/chart-picker/chart-picker.component";
+import { ChartOutletComponent } from './features/chart-outlet/chart-outlet.component';
+import { ChartPickerComponent } from './features/chart-picker/chart-picker.component';
+import { ChartDataTableComponent } from './features/chart-data-table/chart-data-table.component';
+import { ApiDataStore } from './core/api-data.store';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: true,
-    imports: [NgIf, AsyncPipe, BarChartComponent, HeaderComponent, LineChartComponent, DataSelectorComponent, ChartOutletComponent, ChartPickerComponent]
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	standalone: true,
+	imports: [
+		NgIf,
+		AsyncPipe,
+		BarChartComponent,
+		HeaderComponent,
+		LineChartComponent,
+		DataSelectorComponent,
+		ChartOutletComponent,
+		ChartPickerComponent,
+		ChartDataTableComponent,
+	],
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);
 	private barChartService = inject(BarChartService);
 	private lineChartService = inject(LineChartService);
 	private dataTransformationService = inject(DataTransformationService);
+
+	public dataStore = inject(ApiDataStore);
 
 	public itemKeys = ItemKeys;
 	public barChart$: Observable<{ data: BarChartDataPoint[]; source: string }> | undefined;

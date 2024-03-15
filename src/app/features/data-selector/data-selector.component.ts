@@ -73,12 +73,24 @@ export class DataSelectorComponent implements OnInit {
 			GP_CODE: periode && periode.length > 0 ? periode : undefined,
 			FRAK_CODE: fraktion && fraktion.length > 0 ? fraktion : undefined,
 			THEMEN: themen && themen.length > 0 ? themen : undefined,
-			DATUM_VON: regierungsZeiten && regierungsZeiten.length === 1 ? [`${regierungsZeiten[0].start}`] : undefined,
+			DATUM_VON:
+				regierungsZeiten && regierungsZeiten.length === 1
+					? [
+							this.convertToIsoDateString(regierungsZeiten[0].start),
+							...(!!regierungsZeiten[0].end ? [this.convertToIsoDateString(regierungsZeiten[0].end)] : []),
+					  ]
+					: undefined,
 		};
 
 		if (regierungsZeiten && regierungsZeiten.length > 0) {
 			// Todo: send requests equal to regierungszeiten and merge responses
 		}
 		this.apiFacade.fetchData(filterRequestBody).pipe(take(1)).subscribe();
+	}
+
+	private convertToIsoDateString(dateString: string): string {
+		const [day, month, year] = dateString.split('.');
+		const date = new Date(`${year}-${month}-${day}`);
+		return date.toISOString();
 	}
 }

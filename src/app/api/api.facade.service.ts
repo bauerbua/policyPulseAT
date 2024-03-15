@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { ApiDataStore } from '../core/api-data.store';
 import { ApiResponse, FilterRequestBody } from './api-filter.interface';
-import { ApiDataStore, ApiDataState } from '../core/api-data.store';
 
 @Injectable({ providedIn: 'root' })
 export class ApiFacade {
@@ -12,10 +12,7 @@ export class ApiFacade {
 
 	public fetchData(filters?: FilterRequestBody): Observable<boolean> {
 		return this.http
-			.post<ApiResponse['data']>(
-				'https://www.parlament.gv.at/Filter/api/filter/data/101?js=eval&showAll=true',
-				filters ? filters : {}
-			)
+			.post<ApiResponse['data']>('/api/filter/data/101?js=eval&showAll=true', filters ? filters : {})
 			.pipe(
 				map(res => {
 					const data = {

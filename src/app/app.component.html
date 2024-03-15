@@ -1,6 +1,10 @@
 <app-header></app-header>
 <main class="p-2">
 	<app-data-selector></app-data-selector>
+	<app-chart-data-table
+		[dynamicColumns]="dataStore.displayedHeaders()"
+		[dataSource]="dataStore.chartData()"
+	></app-chart-data-table>
 	<app-chart-picker></app-chart-picker>
 	<app-chart-outlet></app-chart-outlet>
 </main>

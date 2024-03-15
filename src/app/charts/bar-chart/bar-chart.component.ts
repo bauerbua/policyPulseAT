@@ -49,6 +49,6 @@ export class BarChartComponent implements OnInit {
 			'﻿<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="4239.54 906.94 3137 1984">' +
 			svgBody +
 			'</svg>';
-		// this.svgService.download(svgContent, 'chart.svg');
+		this.svgService.download(svgContent, 'chart.svg');
 	}
 }

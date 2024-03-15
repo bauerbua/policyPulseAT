@@ -1,5 +1,21 @@
 import { Injectable } from '@angular/core';
-import { NumberValue, axisBottom, axisLeft, max, nice, scaleBand, scaleLinear, select } from 'd3';
+import {
+	NumberValue,
+	axisBottom,
+	axisLeft,
+	interpolateRainbow,
+	max,
+	nice,
+	scaleBand,
+	scaleLinear,
+	scaleSequential,
+	schemeAccent,
+	schemeBrBG,
+	schemeCategory10,
+	schemePastel2,
+	schemePuBuGn,
+	select,
+} from 'd3';
 import { BarChartDataPoint } from '../chart-data-interfaces/bar-chart-data.interface';
 
 export interface IBarChartConfig {
@@ -44,6 +60,8 @@ export class BarChart {
 				.style('opacity', 0)
 				.attr('class', 'text-xs inline-block bg-white border rounded p-2 border-black absolute pointer-events-none');
 
+			const color = scaleSequential(interpolateRainbow);
+
 			selection
 				.selectAll('line')
 				.data(y.ticks())
@@ -63,7 +81,8 @@ export class BarChart {
 				.attr('y', (d: BarChartDataPoint) => y(d.value))
 				.attr('width', x.bandwidth())
 				.attr('height', (d: BarChartDataPoint) => height - margin.bottom - y(d.value))
-				.attr('class', 'fill-tranquilBlue')
+				.attr('fill', (d: BarChartDataPoint, i: any) => color(Math.random() * (1 - 0 + 1) + 0))
+				// .attr('class', 'fill-blue-300')
 				/* .attr('fill', (d: BarChartDataPoint) =>
 					d.category.includes(Fraktion.GRÜNE) ? '#73A31C' : d.category.includes(Fraktion.FPÖ) ? '#0156A2' : 'gray'
 				) */

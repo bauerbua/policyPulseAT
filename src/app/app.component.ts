@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Gegenstand, Gesetzgebungsperiode, Gremium, Thema } from './api/api-filter-dimensions';
@@ -24,16 +24,15 @@ import { ApiDataStore } from './core/api-data.store';
 	styleUrls: ['./app.component.scss'],
 	standalone: true,
 	imports: [
-		NgIf,
-		AsyncPipe,
-		BarChartComponent,
-		HeaderComponent,
-		LineChartComponent,
-		DataSelectorComponent,
-		ChartOutletComponent,
-		ChartPickerComponent,
-		ChartDataTableComponent,
-	],
+    AsyncPipe,
+    BarChartComponent,
+    HeaderComponent,
+    LineChartComponent,
+    DataSelectorComponent,
+    ChartOutletComponent,
+    ChartPickerComponent,
+    ChartDataTableComponent
+],
 })
 export class AppComponent implements OnInit {
 	private apiFacade = inject(ApiFacade);

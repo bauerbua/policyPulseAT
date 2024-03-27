@@ -1,11 +1,11 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { NgIf } from '@angular/common';
+
 import { Component, computed, input, signal } from '@angular/core';
 
 @Component({
 	selector: 'app-chart-data-table',
 	standalone: true,
-	imports: [CdkTableModule, NgIf],
+	imports: [CdkTableModule],
 	templateUrl: './chart-data-table.component.html',
 	styleUrl: './chart-data-table.component.scss',
 })

@@ -1,63 +1,63 @@
-<h3>Wähle deine Daten aus</h3>
-<form [formGroup]="dataSelectorForm" (ngSubmit)="searchData()" class="flex flex-row flex-wrap items-end">
-	<app-multi-select-input
-		label="Themen"
-		[controls]="getControls('themen').controls"
-		[options]="themen"
-		formArrayName="themen"
-	></app-multi-select-input>
+<div class="p-10 m-10 bg-neutral-100 rounded-xl">
+	<h3>Wähle deine Daten aus</h3>
+	<form [formGroup]="dataSelectorForm" (ngSubmit)="searchData()" class="flex flex-row flex-wrap items-end gap-2">
+		<app-multi-select-input
+			label="Themen"
+			[controls]="getControls('themen').controls"
+			[options]="themen"
+			formArrayName="themen"
+		></app-multi-select-input>
 
-	<!-- 		<app-multi-select-input
-		label="Gremium"
-		[controls]="getControls('gremium').controls"
-		[options]="gremien"
-		formArrayName="gremium"
-		[translation]="filterGroups.gremium"
-	></app-multi-select-input> -->
-	<div class="flex flex-col">
-		<label> Gremium </label>
-		<select name="gremium" id="gremium-select" formControlName="gremium">
-			<option value="" disabled>-- Bitte wählen --</option>
-			<option *ngFor="let gremium of gremien" [value]="gremium">
-				{{ gremium | translateEnum : filterGroups.gremium }}
-			</option>
-		</select>
-	</div>
+		<!-- 		<app-multi-select-input
+    label="Gremium"
+    [controls]="getControls('gremium').controls"
+    [options]="gremien"
+    formArrayName="gremium"
+    [translation]="filterGroups.gremium"
+  ></app-multi-select-input> -->
+		<div class="flex flex-col">
+			<label> Gremium </label>
+			<select name="gremium" id="gremium-select" formControlName="gremium">
+				<option value="" disabled>-- Bitte wählen --</option>
+				@for (gremium of gremien; track gremium) {
+				<option [value]="gremium">
+					{{ gremium | translateEnum : filterGroups.gremium }}
+				</option>
+				}
+			</select>
+		</div>
 
-	<app-multi-select-input
-		label="Gesetzgebungsperiode"
-		[controls]="getControls('periode').controls"
-		[options]="periode"
-		formArrayName="periode"
-		[translation]="filterGroups.periode"
-	></app-multi-select-input>
+		<app-multi-select-input
+			label="Gesetzgebungsperiode"
+			[controls]="getControls('periode').controls"
+			[options]="periode"
+			formArrayName="periode"
+			[translation]="filterGroups.periode"
+		></app-multi-select-input>
 
-	<app-multi-select-input
-		label="Regierungen"
-		[controls]="getControls('regierungen').controls"
-		[options]="regierungen"
-		formArrayName="regierungen"
-	></app-multi-select-input>
+		<app-multi-select-input
+			label="Regierungen"
+			[controls]="getControls('regierungen').controls"
+			[options]="regierungen"
+			formArrayName="regierungen"
+		></app-multi-select-input>
 
-	<app-multi-select-input
-		label="Gegenstand"
-		[controls]="getControls('gegenstand').controls"
-		[options]="gegenstand"
-		formArrayName="gegenstand"
-		[translation]="filterGroups.gegenstand"
-	></app-multi-select-input>
+		<app-multi-select-input
+			label="Gegenstand"
+			[controls]="getControls('gegenstand').controls"
+			[options]="gegenstand"
+			formArrayName="gegenstand"
+			[translation]="filterGroups.gegenstand"
+		></app-multi-select-input>
 
-	<app-multi-select-input
-		label="Klub / Fraktion"
-		[controls]="getControls('fraktion').controls"
-		[options]="fraktion"
-		formArrayName="fraktion"
-		[translation]="filterGroups.fraktion"
-	></app-multi-select-input>
+		<app-multi-select-input
+			label="Klub / Fraktion"
+			[controls]="getControls('fraktion').controls"
+			[options]="fraktion"
+			formArrayName="fraktion"
+			[translation]="filterGroups.fraktion"
+		></app-multi-select-input>
 
-	<button class="primary" type="submit">Daten anzeigen</button>
-</form>
-
-<table>
-	
-</table>
+		<button class="primary" type="submit">Daten anzeigen</button>
+	</form>
+</div>

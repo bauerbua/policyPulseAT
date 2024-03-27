@@ -1,6 +1,8 @@
 <h3>Resultat</h3>
 <p>Total data entries: {{ totalDataCount() }}</p>
 <p>Data points in more then one category: {{ countedMultipleTimes() }}</p>
-<div class="p-4" *ngIf="barChartData() as chartData">
-	<app-bar-chart [data]="chartData.data" [source]="chartData.source"></app-bar-chart>
-</div>
+@if (barChartData(); as chartData) {
+  <div class="p-4">
+    <app-bar-chart [data]="chartData.data" [source]="chartData.source"></app-bar-chart>
+  </div>
+}

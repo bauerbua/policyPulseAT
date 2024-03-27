@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { BaseType, Selection, select } from 'd3';
 import { SvgService } from 'src/app/services/download-svg.service';
@@ -8,7 +8,7 @@ import { BarChart } from './bar-chart';
 @Component({
 	selector: 'app-bar-chart',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [],
 	templateUrl: './bar-chart.component.html',
 	styleUrls: ['./bar-chart.component.scss'],
 })

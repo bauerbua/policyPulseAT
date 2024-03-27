@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { BaseType, Selection, select } from 'd3';
 import { LineChartDataPoint } from '../chart-data-interfaces/line-chart-data.interface';
@@ -7,7 +7,7 @@ import { LineChart } from './line-chart';
 @Component({
 	selector: 'app-line-chart',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [],
 	templateUrl: './line-chart.component.html',
 	styleUrls: ['./line-chart.component.scss'],
 })

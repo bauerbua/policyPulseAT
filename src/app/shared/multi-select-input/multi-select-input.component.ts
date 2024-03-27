@@ -1,13 +1,7 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { AbstractControl, ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { FilterGroups, TranslateEnumPipe } from '../../features/data-selector/translateEnum.pipe';
-import {
-	AbstractControl,
-	ControlContainer,
-	FormControl,
-	FormGroupDirective,
-	ReactiveFormsModule,
-} from '@angular/forms';
 
 @Component({
 	selector: 'app-multi-select-input',
@@ -15,7 +9,7 @@ import {
 	templateUrl: './multi-select-input.component.html',
 	styleUrl: './multi-select-input.component.scss',
 	viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
-	imports: [NgFor, NgIf, NgClass, TranslateEnumPipe, ReactiveFormsModule],
+	imports: [NgClass, TranslateEnumPipe, ReactiveFormsModule],
 })
 export class MultiSelectInputComponent {
 	@Input({ required: true }) label: string | undefined;

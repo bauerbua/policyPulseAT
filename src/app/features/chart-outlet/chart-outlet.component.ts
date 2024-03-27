@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import { Component, computed, inject } from '@angular/core';
 import { Thema } from 'src/app/api/api-filter-dimensions';
 import { ApiResponse, ItemKeys } from 'src/app/api/api-filter.interface';
@@ -13,7 +13,7 @@ import { ApiDataStore } from '../../core/api-data.store';
 	standalone: true,
 	templateUrl: './chart-outlet.component.html',
 	styleUrl: './chart-outlet.component.scss',
-	imports: [BarChartComponent, NgIf],
+	imports: [BarChartComponent],
 })
 export class ChartOutletComponent {
 	public apiDataStore = inject(ApiDataStore);

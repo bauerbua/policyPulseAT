@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { take } from 'rxjs';
@@ -14,7 +14,7 @@ import { MultiSelectInputComponent } from '../../shared/multi-select-input/multi
 	standalone: true,
 	templateUrl: './data-selector.component.html',
 	styleUrl: './data-selector.component.scss',
-	imports: [CommonModule, ReactiveFormsModule, TranslateEnumPipe, MultiSelectInputComponent],
+	imports: [ReactiveFormsModule, TranslateEnumPipe, MultiSelectInputComponent],
 })
 export class DataSelectorComponent implements OnInit {
 	private fb = inject(FormBuilder);
